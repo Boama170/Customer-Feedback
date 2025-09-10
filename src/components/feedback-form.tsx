@@ -13,16 +13,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Star, MessageSquare, CheckCircle } from "lucide-react"
+import { MessageSquare, CheckCircle } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 
 interface FeedbackData {
   customerName: string
   customerEmail: string
-  overallRating: number
   npsScore: number
-  feedbackType: string
   comments: string
 }
 
@@ -30,17 +27,11 @@ export default function FeedbackForm() {
   const [formData, setFormData] = useState<FeedbackData>({
     customerName: "",
     customerEmail: "",
-    overallRating: 0,
     npsScore: 0,
-    feedbackType: "",
     comments: "",
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleStarClick = (rating: number) => {
-    setFormData((prev) => ({ ...prev, overallRating: rating }))
-  }
 
   const handleNpsClick = (score: number) => {
     setFormData((prev) => ({ ...prev, npsScore: score }))
@@ -70,9 +61,7 @@ export default function FeedbackForm() {
     setFormData({
       customerName: "",
       customerEmail: "",
-      overallRating: 0,
       npsScore: 0,
-      feedbackType: "",
       comments: "",
     })
     setIsSubmitted(false)
@@ -139,7 +128,7 @@ export default function FeedbackForm() {
               </CardHeader>
 
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-6">
                   {/* Customer Information */}
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
@@ -160,7 +149,6 @@ export default function FeedbackForm() {
                             customerName: e.target.value,
                           }))
                         }
-                        required
                         className="rounded-xl"
                       />
                     </div>
@@ -177,35 +165,10 @@ export default function FeedbackForm() {
                             customerEmail: e.target.value,
                           }))
                         }
-                        required
                         className="rounded-xl"
                       />
                     </div>
                   </motion.div>
-
-                  {/* Overall Rating */}
-                  <div className="space-y-3">
-                    <Label>Overall Experience *</Label>
-                    <div className="flex items-center gap-2 justify-center">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <motion.button
-                          key={star}
-                          type="button"
-                          whileTap={{ scale: 0.85 }}
-                          onClick={() => handleStarClick(star)}
-                          className="p-2"
-                        >
-                          <Star
-                            className={`h-8 w-8 ${
-                              star <= formData.overallRating
-                                ? "fill-yellow-400 text-yellow-400"
-                                : "text-gray-300"
-                            }`}
-                          />
-                        </motion.button>
-                      ))}
-                    </div>
-                  </div>
 
                   {/* NPS Score */}
                   <div className="space-y-3">
@@ -231,58 +194,11 @@ export default function FeedbackForm() {
                     </div>
                   </div>
 
-                  {/* Feedback Type */}
-                  <div className="space-y-3">
-                    <Label>Type of Feedback *</Label>
-                    <RadioGroup
-                      value={formData.feedbackType}
-                      onValueChange={(value) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          feedbackType: value,
-                        }))
-                      }
-                      className="space-y-3"
-                    >
-                      {[
-                        {
-                          value: "compliment",
-                          label: "Compliment - Something we did well",
-                        },
-                        {
-                          value: "suggestion",
-                          label: "Suggestion - How we can improve",
-                        },
-                        {
-                          value: "complaint",
-                          label: "Complaint - Something that went wrong",
-                        },
-                      ].map((item, idx) => (
-                        <motion.div
-                          key={item.value}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.1 * idx }}
-                          className="flex items-center space-x-3 rounded-lg border p-3"
-                        >
-                          <RadioGroupItem value={item.value} id={item.value} />
-                          <Label
-                            htmlFor={item.value}
-                            className="cursor-pointer"
-                          >
-                            {item.label}
-                          </Label>
-                        </motion.div>
-                      ))}
-                    </RadioGroup>
-                  </div>
-
-                  {/* Comments */}
                   <div className="space-y-2">
-                    <Label htmlFor="comments">Additional Comments</Label>
+                    <Label htmlFor="comments">What's your overall view of our company? *</Label>
                     <Textarea
                       id="comments"
-                      placeholder="Please share any additional thoughts..."
+                      placeholder="Please share your thoughts about our company..."
                       value={formData.comments}
                       onChange={(e) =>
                         setFormData((prev) => ({
@@ -301,21 +217,20 @@ export default function FeedbackForm() {
                     whileTap={{ scale: 0.97 }}
                   >
                     <Button
-                      type="submit"
+                      onClick={handleSubmit}
                       className="w-full rounded-xl h-12 text-base"
                       disabled={
                         isSubmitting ||
                         !formData.customerName ||
                         !formData.customerEmail ||
-                        !formData.overallRating ||
                         !formData.npsScore ||
-                        !formData.feedbackType
+                        !formData.comments
                       }
                     >
                       {isSubmitting ? "Submitting..." : "Submit Feedback"}
                     </Button>
                   </motion.div>
-                </form>
+                </div>
               </CardContent>
             </Card>
           </motion.div>
