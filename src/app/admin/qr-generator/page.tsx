@@ -133,11 +133,17 @@ export default function QRCodeDisplay() {
 
           {qrCodeUrl && (
             <div className="space-y-4">
-              <div className="flex justify-center">
-                <div className="bg-white p-4 rounded-lg shadow-sm border">
-                  <Image src={qrCodeUrl || "/placeholder.svg"} alt="Generated QR Code" className="w-64 h-64" />
-                </div>
+            <div className="flex justify-center">
+              <div className="bg-white p-4 rounded-lg shadow-sm border">
+                <Image 
+                  src={qrCodeUrl || "/placeholder.svg"} 
+                  alt="Generated QR Code" 
+                  width={256}
+                  height={256}
+                  className="w-64 h-64"
+                />
               </div>
+            </div>
 
               <div className="text-center space-y-2">
                 <p className="text-sm text-muted-foreground">
