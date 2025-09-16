@@ -21,7 +21,7 @@ interface CompaniesTableProps {
   onViewFeedback: (company: Company) => void
 }
 
-export function CompaniesTable({ companies: propCompanies, onViewFeedback }: CompaniesTableProps) {
+export function CompaniesTable({ companies: propCompanies }: CompaniesTableProps) {
   const [companies, setCompanies] = useState<Company[]>([])
 
   useEffect(() => {

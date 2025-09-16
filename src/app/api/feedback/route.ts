@@ -11,7 +11,7 @@ interface Feedback {
 }
 
 // In-memory storage (resets on server restart)
-let feedbacks: Feedback[] = [];
+const feedbacks: Feedback[] = [];
 
 export async function POST(request: NextRequest) {
   try {

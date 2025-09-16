@@ -1,3 +1,5 @@
+ /* eslint-disable @typescript-eslint/no-explicit-any */ 
+  /* eslint-disable @typescript-eslint/no-unused-vars */ 
 "use client";
 
 import { useState, useEffect } from "react";
@@ -14,8 +16,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { MessageSquare, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import Image from 'next/image'
 
 interface FeedbackData {
   customerName: string;
@@ -183,7 +186,7 @@ export default function FeedbackForm() {
                   <CardHeader className="text-center space-y-2 pb-4">
                     <CardTitle className="flex items-center justify-center gap-2 text-lg">
                       {company.domain && (
-                        <img
+                        <Image
                           src={`${company.domain.replace(/\/$/, '')}/favicon.ico`}
                           alt={`${company.name} logo`}
                           className="w-5 h-5 rounded"

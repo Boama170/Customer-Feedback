@@ -5,13 +5,14 @@ import { CompaniesTable } from "@/components/ui/companies-table"
 import { FeedbackTable } from "@/components/feedback-table"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
+import { Company } from "@/types/company"
 
 export default function Home() {
   const [currentView, setCurrentView] = useState<"home" | "companies" | "feedback">("home")
   const [selectedCompany, setSelectedCompany] = useState<string>("")
 
-  const handleViewFeedback = (companyName: string) => {
-    setSelectedCompany(companyName)
+  const handleViewFeedback = (company: Company) => {
+    setSelectedCompany(company.name)
     setCurrentView("feedback")
   }
 
